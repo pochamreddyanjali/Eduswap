@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Other Experts</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#searchBar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.user {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.user a {
+    display: inline-block;
+    margin-top: 8px;
+    text-decoration: none;
+    color: white;
+    background: #0077B5;
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>OTHER REGISTERED EXPERTS</h2>
+
+    <!-- 🔍 Search Bar -->
+    <input type="text" id="searchBar" placeholder="Search by description...">
+
+    <div id="userDetails">Loading...</div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA8KJUDCxCt9u11xwVJAH_KkiQsVo9ojlQ",
+  authDomain: "eduswap-494fe.firebaseapp.com",
+  projectId: "eduswap-494fe",
+  storageBucket: "eduswap-494fe.appspot.com",
+  messagingSenderId: "485491741775",
+  appId: "1:485491741775:web:99686afbda0b44e1f9063a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const container = document.getElementById("userDetails");
+const searchBar = document.getElementById("searchBar");
+
+let allExperts = [];
+
+// 🔥 Load experts
+async function loadUsers() {
+
+    const q = query(
+        collection(db, "skills"),
+        where("course", "==", "Other")
+    );
+
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+        container.innerHTML = "<p>No experts registered yet.</p>";
+        return;
+    }
+
+    allExperts = [];
+
+    snapshot.forEach(doc => {
+        allExperts.push(doc.data());
+    });
+
+    displayUsers(allExperts);
+}
+
+// 🔥 Display function
+function displayUsers(users) {
+
+    container.innerHTML = "";
+
+    if (users.length === 0) {
+        container.innerHTML = "<p>No matching experts found.</p>";
+        return;
+    }
+
+    users.forEach(data => {
+        container.innerHTML += `
+            <div class="user">
+                <h3>${data.name}</h3>
+                <p>${data.description || "No description provided"}</p>
+                ${data.social ? `<a href="${data.social}" target="_blank">View Profile</a>` : ""}
+            </div>
+        `;
+    });
+}
+
+// 🔍 Search filter
+searchBar.addEventListener("keyup", () => {
+
+    const keyword = searchBar.value.toLowerCase();
+
+    const filtered = allExperts.filter(expert =>
+        expert.description &&
+        expert.description.toLowerCase().includes(keyword)
+    );
+
+    displayUsers(filtered);
+});
+
+loadUsers();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('IMAGES/login.jpg') no-repeat center center/cover;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(82, 183, 136, 0.8);
+            z-index: -1;
+        }
+
+        .welcome-message {
+            font-size: 40px;
+            color: black;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .login-box {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #001f4d;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-btn {
+            width: 48%;
+            padding: 12px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: #168aad;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #52b69a;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .signup-btn:hover {
+            background-color: #e14e2a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="welcome-message">
+    Welcome to EduSwap
+</div>
+
+<div class="login-box">
+    <h2>Login</h2>
+
+    <div class="error" id="error"></div>
+
+    <form id="loginForm">
+        <input type="email" id="login-email" class="input-field" placeholder="Email" required>
+        <input type="password" id="login-password" class="input-field" placeholder="Password" required>
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div style="margin-top:20px;">New to EduSwap?</div>
+
+    <button class="signup-btn" onclick="window.location.href='register.html'">
+        Sign Up
+    </button>
+</div>
+
+<!-- Firebase Script -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA8KJUDCxCt9u11xwVJAH_KkiQsVo9ojlQ",
+  authDomain: "eduswap-494fe.firebaseapp.com",
+  projectId: "eduswap-494fe",
+  storageBucket: "eduswap-494fe.firebasestorage.app",
+  messagingSenderId: "485491741775",
+  appId: "1:485491741775:web:99686afbda0b44e1f9063a"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+    const errorDiv = document.getElementById("error");
+
+    errorDiv.innerText = "";
+
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "dashboard.html";
+    } catch (error) {
+        errorDiv.innerText = "Invalid email or password. Please try again.";
+    }
+});
+
+</script>
+
+</body>
+</html>

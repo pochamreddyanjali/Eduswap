@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Connect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            height: 100vh;
+            background-image: url('IMAGES/high\ profile.jpg'); /* Reference your image in the 'images' folder */
+            background-size: cover;  /* Ensure the image covers the entire background */
+            background-position: center;  /* Center the image */
+            background-repeat: no-repeat;  /* Prevent the image from repeating */
+            margin: 0;
+            padding: 0;
+            display: flex;  /* Use flexbox to center content */
+            justify-content: center;  /* Center horizontally */
+            align-items: center;  /* Center vertically */
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .btn {
+            display: block;
+            margin: 15px auto;
+            padding: 12px;
+            width: 80%;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Keyframes for the Registration button (Green -> Orange -> Purple -> Red -> Yellow) */
+        @keyframes registrationColorChange {
+            0% {
+                background-color: #28a745;  /* Green */
+            }
+            25% {
+                background-color: #ff5733;  /* Orange */
+            }
+            50% {
+                background-color: #8e44ad;  /* Purple */
+            }
+            75% {
+                background-color: #e74c3c;  /* Red */
+            }
+            100% {
+                background-color: #f39c12;  /* Yellow */
+            }
+        }
+
+        /* Keyframes for the Connect button (Blue -> Pink -> LightBlue -> Teal -> Purple) */
+        @keyframes connectColorChange {
+            0% {
+                background-color: #007bff;  /* Blue */
+            }
+            25% {
+                background-color: #ff69b4;  /* Pink */
+            }
+            50% {
+                background-color: #1e90ff;  /* LightBlue */
+            }
+            75% {
+                background-color: #20b2aa;  /* Teal */
+            }
+            100% {
+                background-color: #8e44ad;  /* Purple */
+            }
+        }
+
+        /* Apply animations to buttons */
+        .registration {
+            background: #28a745; /* Initial green */
+            animation: registrationColorChange 4s infinite alternate;  /* Animation for Registration button */
+        }
+
+        .connect {
+            background: #007bff; /* Initial blue */
+            animation: connectColorChange 4s infinite alternate;  /* Animation for Connect button */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome to Student Connect</h1>
+        <p>Join the network or find influential students!</p>
+        
+        <!-- Both buttons with their respective color-changing animations -->
+        <button class="btn registration" onclick="location.href='registration.html'">Registration</button>
+        <button class="btn connect" onclick="location.href='connect.html'">Connect</button>
+    </div>
+
+</body>
+</html>

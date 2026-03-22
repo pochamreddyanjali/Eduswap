@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share a Skill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            font-weight: bold;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Share a Skill</h2>
+    <div class="container">
+        <form action="purchase_skill.html" method="get">
+            <label>Your Name:</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+
+            <label>Skill Name:</label>
+            <input type="text" name="skill" placeholder="Skill you want to share" required>
+
+            <label>Qualification:</label>
+            <input type="text" name="qualification" placeholder="Your qualification" required>
+
+            <label>Upload Certification (Optional):</label>
+            <input type="file" name="certificate">
+
+            <label>Years of Experience:</label>
+            <input type="number" name="experience" placeholder="Enter years of experience" required>
+
+            <label>Email:</label>
+            <input type="email" name="email" placeholder="Your email" required>
+
+            <label>Contact Number (Optional):</label>
+            <input type="tel" name="contact" placeholder="Your contact number">
+
+            <label>LinkedIn Profile (Optional):</label>
+            <input type="url" name="linkedin" placeholder="LinkedIn URL">
+
+            <label>Twitter Profile (Optional):</label>
+            <input type="url" name="twitter" placeholder="Twitter URL">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>

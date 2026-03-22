@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Network</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .search-container {
+            margin: 20px;
+        }
+        input {
+            padding: 10px;
+            width: 60%;
+            font-size: 16px;
+        }
+        .candidates-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .candidate {
+            border: 1px solid #ddd;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            height: 220px;
+        }
+        .candidate img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+        .candidate strong {
+            font-size: 18px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            background-color: white;
+            padding: 20px;
+            border: 2px solid #ddd;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border-radius: 10px;
+        }
+        .popup img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .popup button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .popup a {
+            display: block;
+            margin-top: 10px;
+            padding: 5px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Explore Skills</h2>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search for a skill..." onkeyup="filterCandidates()">
+    </div>
+
+    <div id="candidates" class="candidates-container"></div>
+
+    <!-- Profile Popup -->
+    <div id="profilePopup" class="popup">
+        <img id="popupImage" src="" alt="Profile Image">
+        <h3 id="popupName"></h3>
+        <p><strong>Email:</strong> <span id="popupEmail"></span></p>
+        <p><strong>Skill:</strong> <span id="popupSkill"></span></p>
+        <p><strong>Location:</strong> <span id="popupLocation"></span></p>
+        <p><strong>Experience:</strong> <span id="popupExperience"></span> years</p>
+        <p><strong>Phone:</strong> <span id="popupPhone"></span></p>
+        <a id="popupVideo" href="#" target="_blank">Watch Video</a>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        const candidates = [
+            { name: "Jenny", email: "jenny@123.com", skill: "C Programming", location: "Hyderabad", experience: 5, phone: "123-456-7890", image: "images@skillfree/c.jpg", video: "https://www.youtube.com/watch?v=abcd1234" },
+            { name: " Shridhar Mankar", email: "shridharcyber@gmail.com", skill: "CyberSecurity", location: "Los Angeles", experience: 4, phone: "987-654-3210", image: "images@skillfree/cyber security.jpg", video: "https://www.youtube.com/watch?v=wxyz5678" },
+            { name: "Waleed Mushtaq", email: "waleed@gmail.com", skill: "GraphicDesign", location: "Chicago", experience: 6, phone: "555-123-4567", image: "images@skillfree/graphicdesign.jpg", video: "https://www.youtube.com/watch?v=data8901" },
+            { name: "Bob Johnson", email: "bob@example.com", skill: "Cyber Security", location: "Houston", experience: 3, phone: "666-789-1234", image: "https://randomuser.me/api/portraits/men/4.jpg", video: "https://www.youtube.com/watch?v=cyber3456" },
+            { name: "Emma Wilson", email: "emma@example.com", skill: "Machine Learning", location: "San Francisco", experience: 7, phone: "777-345-6789", image: "https://randomuser.me/api/portraits/women/5.jpg", video: "https://www.youtube.com/watch?v=ml7890" },
+            { name: "Liam Martinez", email: "liam@example.com", skill: "Mobile App Development", location: "Miami", experience: 2, phone: "888-234-5678", image: "https://randomuser.me/api/portraits/men/6.jpg", video: "https://www.youtube.com/watch?v=mobile6789" }
+        ];
+
+        function displayInitialCandidates() {
+            let container = document.getElementById("candidates");
+            container.innerHTML = "";
+
+            let initialCandidates = candidates.slice(0, 6);
+            initialCandidates.forEach(candidate => {
+                let div = document.createElement("div");
+                div.className = "candidate";
+                div.innerHTML = `<img src="${candidate.image}" alt="Profile">
+                                 <strong>${candidate.name}</strong>
+                                 <p><em>${candidate.skill}</em></p>`;
+                div.onclick = () => openPopup(candidate);
+                container.appendChild(div);
+            });
+        }
+
+        function filterCandidates() {
+            let searchValue = document.getElementById("search").value.toLowerCase();
+            let filtered = candidates.filter(c => c.skill.toLowerCase().includes(searchValue));
+
+            let container = document.getElementById("candidates");
+            container.innerHTML = "";
+
+            if (searchValue === "") {
+                displayInitialCandidates();
+            } else {
+                filtered.forEach(candidate => {
+                    let div = document.createElement("div");
+                    div.className = "candidate";
+                    div.innerHTML = `<img src="${candidate.image}" alt="Profile">
+                                     <strong>${candidate.name}</strong>
+                                     <p><em>${candidate.skill}</em></p>`;
+                    div.onclick = () => openPopup(candidate);
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function openPopup(candidate) {
+            document.getElementById("popupImage").src = candidate.image;
+            document.getElementById("popupName").innerText = candidate.name;
+            document.getElementById("popupEmail").innerText = candidate.email;
+            document.getElementById("popupSkill").innerText = candidate.skill;
+            document.getElementById("popupLocation").innerText = candidate.location;
+            document.getElementById("popupExperience").innerText = candidate.experience;
+            document.getElementById("popupPhone").innerText = candidate.phone;
+            document.getElementById("popupVideo").href = candidate.video;
+            document.getElementById("profilePopup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("profilePopup").style.display = "none";
+        }
+
+        displayInitialCandidates();
+    </script>
+
+</body>
+</html>
