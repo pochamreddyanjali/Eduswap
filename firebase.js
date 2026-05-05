@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA8KJUDCxCt9u11xwVJAH_KkiQsVo9ojlQ",
+  apiKey: "your api key here",
   authDomain: "eduswap-494fe.firebaseapp.com",
   projectId: "eduswap-494fe",
   storageBucket: "eduswap-494fe.firebasestorage.app",
