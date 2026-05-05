@@ -65,23 +65,15 @@
     Loading...
 </div>
 
-<!-- 🔥 Firebase Script -->
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { auth } from "./firebase.js";
 import { getFirestore, collection, getDocs } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA8KJUDCxCt9u11xwVJAH_KkiQsVo9ojlQ",
-  authDomain: "eduswap-494fe.firebaseapp.com",
-  projectId: "eduswap-494fe",
-  storageBucket: "eduswap-494fe.appspot.com",
-  messagingSenderId: "485491741775",
-  appId: "1:485491741775:web:99686afbda0b44e1f9063a"
-};
-
-const app = initializeApp(firebaseConfig);
+// reuse Firebase app
+const app = getApp();
 const db = getFirestore(app);
 
 const userList = document.getElementById("userList");
@@ -93,7 +85,6 @@ async function loadCollegeUsers() {
 
     try {
 
-        // ✅ Correct collection name
         const snapshot = await getDocs(collection(db, "network_users"));
 
         if (snapshot.empty) {
@@ -143,6 +134,7 @@ searchBox.addEventListener("keyup", () => {
     const query = searchBox.value.toLowerCase();
 
     const filtered = allUsers.filter(user =>
+        user.college &&
         user.college.toLowerCase().includes(query)
     );
 

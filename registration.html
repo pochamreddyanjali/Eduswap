@@ -61,19 +61,13 @@
 <!-- Firebase Script -->
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { auth } from "./firebase.js";
+import { getFirestore, collection, addDoc } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA8KJUDCxCt9u11xwVJAH_KkiQsVo9ojlQ",
-  authDomain: "eduswap-494fe.firebaseapp.com",
-  projectId: "eduswap-494fe",
-  storageBucket: "eduswap-494fe.firebasestorage.app",
-  messagingSenderId: "485491741775",
-  appId: "1:485491741775:web:99686afbda0b44e1f9063a"
-};
-
-const app = initializeApp(firebaseConfig);
+// reuse existing Firebase app
+const app = getApp();
 const db = getFirestore(app);
 
 const form = document.getElementById("registrationForm");
@@ -94,7 +88,8 @@ form.addEventListener("submit", async (e) => {
             popularApp,
             socialLink,
             description,
-            createdAt: new Date()
+            createdAt: new Date(),
+            userId: auth.currentUser ? auth.currentUser.uid : null
         });
 
         alert("Registration Successful!");
